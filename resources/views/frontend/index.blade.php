@@ -4,6 +4,9 @@
 Home BD Online Shop
 @endsection
 
+
+
+
 <div class="body-content outer-top-xs" id="top-banner-and-menu">
     <div class="container">
       <div class="row"> 
@@ -1194,7 +1197,12 @@ Home BD Online Shop
                       <div class="action">
                         <ul class="list-unstyled">
                           <li class="add-cart-button btn-group">
-                            <button class="btn btn-primary icon" data-toggle="dropdown" type="button"> <i class="fa fa-shopping-cart"></i> </button>
+
+                            <button class="btn btn-primary icon" type="button" data-toggle="modal" 
+                            data-target="#myModal" id="{{ $product->id }}" onclick="productView(this.id)"  > <i class="fa fa-shopping-cart"></i> </button>
+
+                         
+
                             <button class="btn btn-primary cart-btn" type="button">Add to cart</button>
                           </li>
                           <li class="lnk wishlist"> <a class="add-to-cart" href="detail.html" title="Wishlist"> <i class="icon fa fa-heart"></i> </a> </li>
@@ -1203,6 +1211,10 @@ Home BD Online Shop
                       </div>
                       <!-- /.action --> 
                     </div>
+
+                    
+
+             
                     <!-- /.cart --> 
                   </div>
                   <!-- /.product --> 
@@ -1210,13 +1222,82 @@ Home BD Online Shop
                 </div>
                 <!-- /.products --> 
               </div>
+
+            
               @endforeach
               <!-- /.item -->
-           
-              
-             
+
             </div>
             <!-- /.home-owl-carousel --> 
+
+           
+            <div id="myModal" class="modal fade" role="dialog">
+              <div class="modal-dialog">
+            
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title"><span id="pname"></span></h4>
+                  </div>
+                  <div class="modal-body">
+                   <div class="row">
+                    <div class="col-md-4">
+                      <div class="card" style="width: 18rem;">
+                        <img src=" " class="card-img-top" alt="..." style="height: 200px; width: 180px;" id="pimage">
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <ul class="list-group">
+                        <li class="list-group-item">Product Price: 
+                          <strong class="text-danger">$<span id="pprice"></span></strong>
+                          <del id="oldprice">$</del>
+                        </li>
+                        <li class="list-group-item">Product Code: <strong id="pcode"></strong></li>
+                        <li class="list-group-item">Category: <strong id="pcategory"></strong></li>
+                        <li class="list-group-item">Brand: <strong id="pbrand"></strong></li>
+                        <li class="list-group-item">Stock: 
+                          <span class="badge badge-pill badge-success" id="aviable" style="background: green; color: white;"></span> 
+<span class="badge badge-pill badge-danger" id="stockout" style="background: red; color: white;"></span> 
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="col-md-4">
+                     <div class="form-group">
+                      <select class="form-select form-control" name="color">
+                        <label for="exampleFormControlSelect1">Choose Color</label>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                      </select>
+                     </div>
+                     <div class="form-group" id="sizeArea">
+                      <select class="form-select form-control" name="size">
+                        <label for="exampleFormControlSelect1">Choose Size</label>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                      </select>
+                     </div>
+                     <div class="form-group">
+                      <label for="exampleFormControlSelect1">Quantity</label>
+                      <input type="number" class="form-control" value="1" min="1">
+                     </div>
+
+                     <button type="submit" class="btn btn-primary mb-2">Add to Cart</button>
+
+                    </div>
+                   </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+            
+              </div>
+            </div>
+          
+            {{-- add to cart modal end --}}
           </section>
           <!-- /.section --> 
           <!-- ============================================== FEATURED PRODUCTS : END ============================================== --> 
@@ -2123,5 +2204,7 @@ Home BD Online Shop
     </div>
     <!-- /.container --> 
   </div>
+
+
     
 @endsection
