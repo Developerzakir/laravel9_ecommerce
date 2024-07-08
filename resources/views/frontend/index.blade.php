@@ -1237,7 +1237,7 @@ Home BD Online Shop
                 <!-- Modal content-->
                 <div class="modal-content">
                   <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal" id="closeModel">&times;</button>
                     <h4 class="modal-title"><span id="pname"></span></h4>
                   </div>
                   <div class="modal-body">
@@ -1264,7 +1264,7 @@ Home BD Online Shop
                     </div>
                     <div class="col-md-4">
                      <div class="form-group">
-                      <select class="form-select form-control" name="color">
+                      <select class="form-select form-control" name="color" id="color">
                         <label for="exampleFormControlSelect1">Choose Color</label>
                         <option value="1">One</option>
                         <option value="2">Two</option>
@@ -1272,7 +1272,7 @@ Home BD Online Shop
                       </select>
                      </div>
                      <div class="form-group" id="sizeArea">
-                      <select class="form-select form-control" name="size">
+                      <select class="form-select form-control" name="size" id="size">
                         <label for="exampleFormControlSelect1">Choose Size</label>
                         <option value="1">One</option>
                         <option value="2">Two</option>
@@ -1281,10 +1281,12 @@ Home BD Online Shop
                      </div>
                      <div class="form-group">
                       <label for="exampleFormControlSelect1">Quantity</label>
-                      <input type="number" class="form-control" value="1" min="1">
+                      <input type="number" class="form-control" value="1" min="1" id="qty">
                      </div>
 
-                     <button type="submit" class="btn btn-primary mb-2">Add to Cart</button>
+                     <input type="hidden" id="product_id">
+
+                     <button type="submit" class="btn btn-primary mb-2" onclick="addToCart()">Add to Cart</button>
 
                     </div>
                    </div>
