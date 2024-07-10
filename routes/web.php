@@ -4,14 +4,16 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\SubCategory;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BrandController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\ProductController;
-use App\Http\Controllers\CartController;
+use App\Http\Controllers\CartPageController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\WishlistController;
 use App\Http\Controllers\AdminProfileController;
 
 /*
@@ -72,49 +74,64 @@ Route::middleware(['auth:sanctum',
 
 
 
-
 //Front end Route
-Route::get('/', [IndexController::class, 'index']);
-Route::get('/user/logout', [IndexController::class, 'userLogout'])->name('user.logout');
-Route::get('/user/profile', [IndexController::class, 'userProfile'])->name('user.profile');
-Route::post('/user/profile/store', [IndexController::class, 'userProfileStore'])->name('user.profile.store');
-Route::get('/user/change/password', [IndexController::class, 'userChangePassword'])->name('user.change.password');
-Route::post('/user/update/password', [IndexController::class, 'userUpdatePassword'])->name('user.password.update');
+Route::controller(IndexController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('/user/logout', 'userLogout')->name('user.logout');
+    Route::get('/user/profile', 'userProfile')->name('user.profile');
+    Route::post('/user/profile/store', 'userProfileStore')->name('user.profile.store');
+    Route::get('/user/change/password', 'userChangePassword')->name('user.change.password');
+    Route::post('/user/update/password', 'userUpdatePassword')->name('user.password.update');
+});
+
 
 //All  Brand Route on Admin side
 Route::prefix('brand')->group(function(){
-    Route::get('/view', [BrandController::class, 'brandView'])->name('all.brand');
-    Route::post('/store', [BrandController::class, 'brandStore'])->name('brand.store');
-    Route::get('/edit/{id}', [BrandController::class, 'edit'])->name('brand.edit');
-    Route::post('/update', [BrandController::class, 'update'])->name('brand.update');
-    Route::get('/destroy/{id}', [BrandController::class, 'destroy'])->name('brand.destroy');
+    Route::controller(BrandController::class)->group(function () {
+        Route::get('/view', 'brandView')->name('all.brand');
+        Route::post('/store', 'brandStore')->name('brand.store');
+        Route::get('/edit/{id}', 'edit')->name('brand.edit');
+        Route::post('/update', 'update')->name('brand.update');
+        Route::get('/destroy/{id}', 'destroy')->name('brand.destroy');
+    });
+  
 });
 
 //All  Category Route on Admin side
 Route::prefix('category')->group(function(){
-    Route::get('/view', [CategoryController::class, 'categoryView'])->name('all.category');
-    Route::post('/store', [CategoryController::class, 'categoryStore'])->name('category.store');
-    Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name('category.edit');
-    Route::post('/update/{id}', [CategoryController::class, 'update'])->name('category.update');
-    Route::get('/destroy/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
+    Route::controller(CategoryController::class)->group(function () {
+        Route::get('/view', 'categoryView')->name('all.category');
+        Route::post('/store', 'categoryStore')->name('category.store');
+        Route::get('/edit/{id}', 'edit')->name('category.edit');
+        Route::post('/update/{id}', 'update')->name('category.update');
+        Route::get('/destroy/{id}', 'destroy')->name('category.destroy');
+    });
+   
 });
 
 //All  Sub Category Route on Admin side
 Route::prefix('subcategory')->group(function(){
-    Route::get('/view', [SubCategory::class, 'subCategoryView'])->name('all.subcategory');
-    Route::post('/store', [SubCategory::class, 'subcategoryStore'])->name('subcategory.store');
-    Route::get('/edit/{id}', [SubCategory::class, 'edit'])->name('subcategory.edit');
-    Route::post('/update', [SubCategory::class, 'update'])->name('subcategory.update');
-    Route::get('/destroy/{id}', [SubCategory::class, 'destroy'])->name('subcategory.destroy');
+    Route::controller(SubCategory::class)->group(function () {
+        Route::get('/view', 'subCategoryView')->name('all.subcategory');
+        Route::post('/store', 'subcategoryStore')->name('subcategory.store');
+        Route::get('/edit/{id}',  'edit')->name('subcategory.edit');
+        Route::post('/update', 'update')->name('subcategory.update');
+        Route::get('/destroy/{id}', 'destroy')->name('subcategory.destroy');
+    });
+ 
 });
 
 //All  Sub Sub Category Route on Admin side
 Route::prefix('subsubcategory')->group(function(){
-    Route::get('/view', [SubCategory::class, 'subSubCategoryView'])->name('all.subsubcategory');
-    Route::post('/store', [SubCategory::class, 'subSubcategoryStore'])->name('subsubcategory.store');
-    Route::get('/edit/{id}', [SubCategory::class, 'subsubcategoryedit'])->name('subsubcategory.edit');
-    Route::post('/update', [SubCategory::class, 'subSubCategoryUpdate'])->name('subsubcategory.update');
-    Route::get('/destroy/{id}', [SubCategory::class, 'subSubCategorydestroy'])->name('subsubcategory.destroy');
+
+    Route::controller(SubCategory::class)->group(function () {
+        Route::get('/view', 'subSubCategoryView')->name('all.subsubcategory');
+        Route::post('/store', 'subSubcategoryStore')->name('subsubcategory.store');
+        Route::get('/edit/{id}', 'subsubcategoryedit')->name('subsubcategory.edit');
+        Route::post('/update', 'subSubCategoryUpdate')->name('subsubcategory.update');
+        Route::get('/destroy/{id}', 'subSubCategorydestroy')->name('subsubcategory.destroy');
+    });
+  
 });
 
 
@@ -164,29 +181,37 @@ Route::prefix('slider')->group(function(){
 Route::get('/language/hindi', [LanguageController::class, 'Hindi'])->name('hindi.language');
 Route::get('/language/english', [LanguageController::class, 'English'])->name('english.language');
 
-// Frontend Product Details Page url 
-Route::get('/product/details/{id}/{slug}', [IndexController::class, 'ProductDetails']);
 
-// Frontend Product Tags Page 
-Route::get('/product/tag/{tag}', [IndexController::class, 'TagWiseProduct']);
+Route::controller(IndexController::class)->group(function () {
+    Route::get('/product/details/{id}/{slug}', 'ProductDetails');
+    Route::get('/product/tag/{tag}', 'TagWiseProduct');
+    Route::get('/subcategory/product/{subcat_id}/{slug}', 'SubCatWiseProduct');
+    Route::get('/subsubcategory/product/{subsubcat_id}/{slug}', 'SubSubCatWiseProduct');
+    Route::get('/product/view/modal/{id}', 'ProductViewAjax');
+});
 
-// Frontend SubCategory wise Data
-Route::get('/subcategory/product/{subcat_id}/{slug}', [IndexController::class, 'SubCatWiseProduct']);
+//Cart Routes
+Route::controller(CartController::class)->group(function () {
+    Route::post('/cart/data/store/{id}',  'AddToCart');
+    Route::get('/product/mini/cart/',  'AddMiniCart');
+    Route::get('/minicart/product-remove/{rowId}',  'RemoveMiniCart');
+    Route::post('/add-to-wishlist/{product_id}',  'AddToWishlist');
+});
 
-// Frontend Sub-SubCategory wise Data
-Route::get('/subsubcategory/product/{subsubcat_id}/{slug}', [IndexController::class, 'SubSubCatWiseProduct']);
+// Wishlist page
+Route::group(['prefix'=>'user','middleware' => ['user','auth']],function(){
 
-// Product View Modal with Ajax
-Route::get('/product/view/modal/{id}', [IndexController::class, 'ProductViewAjax']);
+    Route::controller(WishlistController::class)->group(function () {
+        Route::get('/wishlist',  'ViewWishlist')->name('wishlist');
+        Route::get('/get-wishlist-product', 'GetWishlistProduct');
+        Route::get('/wishlist-remove/{id}',  'RemoveWishlistProduct');
+    });
 
-// Add to Cart Store Data
-Route::post('/cart/data/store/{id}', [CartController::class, 'AddToCart']);
+    Route::get('/mycart', [CartPageController::class, 'MyCart'])->name('mycart');
+    Route::get('/get-cart-product', [CartPageController::class, 'GetCartProduct']);
+    Route::get('/cart-remove/{rowId}', [CartPageController::class, 'RemoveCartProduct']);
+});
 
-
-// Get Data from mini cart
-Route::get('/product/mini/cart/', [CartController::class, 'AddMiniCart']);
-
-// Remove mini cart
-Route::get('/minicart/product-remove/{rowId}', [CartController::class, 'RemoveMiniCart']);
-
+Route::get('/cart-increment/{rowId}', [CartPageController::class, 'CartIncrement']);
+Route::get('/cart-decrement/{rowId}', [CartPageController::class, 'CartDecrement']);
 
