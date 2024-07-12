@@ -91,6 +91,38 @@ $route = Route::current()->getName();
            
             <li class="{{($route == 'view.slider')? 'active': ''}}"><a href="{{route('view.slider')}}"><i class="ti-more"></i>Manage Slider</a></li>
           </ul>
+        </li> 	
+
+        {{-- Cupons section start --}}
+        <li class="treeview {{($prefix == '/cupons') ? 'active': ''}}">
+          <a href="#">
+            <i data-feather="file"></i>
+            <span>Cupons</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{($route == 'manage-coupon')? 'active': ''}}"><a href="{{route('manage-coupon')}}"><i class="ti-more"></i>Manage Cupons</a></li>
+          </ul>
+        </li> 	
+
+        {{-- Cupons section start --}}
+        <li class="treeview {{($prefix == '/shipping') ? 'active': ''}}">
+          <a href="#">
+            <i data-feather="file"></i>
+            <span>Shipping Area</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-right pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li class="{{($route == 'manage-division')? 'active': ''}}"><a href="{{route('manage-division')}}"><i class="ti-more"></i>Shipping Division</a></li>
+
+            <li class="{{ ($route == 'manage-district')? 'active':'' }}"><a href="{{ route('manage-district') }}"><i class="ti-more"></i>Ship District</a></li>
+
+            <li class="{{ ($route == 'manage-state')? 'active':'' }}"><a href="{{ route('manage-state') }}"><i class="ti-more"></i>Ship State</a></li>
+          </ul>
         </li> 		  
 		 
         <li class="header nav-small-cap">User Interface</li>
