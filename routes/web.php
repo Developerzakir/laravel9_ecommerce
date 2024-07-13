@@ -10,6 +10,7 @@ use App\Http\Controllers\BrandController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\CouponController;
 use App\Http\Controllers\SliderController;
+use App\Http\Controllers\StripeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartPageController;
 use App\Http\Controllers\CategoryController;
@@ -79,7 +80,7 @@ Route::middleware(['auth:sanctum',
 
 //Front end Route
 Route::controller(IndexController::class)->group(function () {
-    Route::get('/', 'index');
+    Route::get('/', 'index')->name('front.index');
     Route::get('/user/logout', 'userLogout')->name('user.logout');
     Route::get('/user/profile', 'userProfile')->name('user.profile');
     Route::post('/user/profile/store', 'userProfileStore')->name('user.profile.store');
@@ -213,6 +214,8 @@ Route::group(['prefix'=>'user','middleware' => ['user','auth']],function(){
     Route::get('/mycart', [CartPageController::class, 'MyCart'])->name('mycart');
     Route::get('/get-cart-product', [CartPageController::class, 'GetCartProduct']);
     Route::get('/cart-remove/{rowId}', [CartPageController::class, 'RemoveCartProduct']);
+
+    Route::post('/stripe/order', [StripeController::class, 'StripeOrder'])->name('stripe.order');
 });
 
 Route::get('/cart-increment/{rowId}', [CartPageController::class, 'CartIncrement']);
@@ -253,6 +256,8 @@ Route::prefix('shipping')->group(function(){
     Route::post('/state/update/{id}', [ShippingAreaController::class, 'StateUpdate'])->name('state.update');
     Route::get('/state/delete/{id}', [ShippingAreaController::class, 'StateDelete'])->name('state.delete');
 
+    
+
 });
 
 
@@ -270,4 +275,6 @@ Route::get('/coupon-remove', [CartController::class, 'CouponRemove']);
  Route::get('/state-get/ajax/{district_id}', [CheckoutController::class, 'StateGetAjax']);
 
  Route::post('/checkout/store', [CheckoutController::class, 'CheckoutStore'])->name('checkout.store');
+
+
 

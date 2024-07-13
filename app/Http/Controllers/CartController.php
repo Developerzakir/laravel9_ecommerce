@@ -119,7 +119,7 @@ class CartController extends Controller
 			]);
 
             return response()->json(array(
-
+                'validity' => true,
                 'success' => 'Coupon Applied Successfully'
             ));
 
