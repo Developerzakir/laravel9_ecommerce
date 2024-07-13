@@ -466,7 +466,7 @@
     
     });
     
-    </script>
+</script>
     
  {{-- preview product main image --}}
     <script type="text/javascript">

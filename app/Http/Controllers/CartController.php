@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use App\Models\Cupon;
 use App\Models\Product;
+use App\Models\ShipDivision;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -151,5 +152,45 @@ class CartController extends Controller
 	 public function CouponRemove(){
         Session::forget('coupon');
         return response()->json(['success' => 'Coupon Remove Successfully']);
-    }
+    } //end method
+
+
+	//////// Checkout Method ////////////////////
+    public function CheckoutCreate(){
+
+        if (Auth::check()) {
+            if (Cart::total() > 0) {
+
+        $carts = Cart::content();
+        $cartQty = Cart::count();
+        $cartTotal = Cart::total();
+
+
+		$divisions = ShipDivision::orderBy('division_name','ASC')->get();
+        return view('frontend.checkout.checkout_view',compact('carts','cartQty','cartTotal','divisions'));
+
+            }else{
+
+            $notification = array(
+            'message' => 'Shopping At list One Product',
+            'alert-type' => 'error'
+        );
+
+        return redirect()->to('/')->with($notification);
+
+            }
+
+
+        }else{
+
+             $notification = array(
+            'message' => 'You Need to Login First',
+            'alert-type' => 'error'
+        );
+
+        return redirect()->route('login')->with($notification);
+
+        }
+
+    } // end method 
 }
