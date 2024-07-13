@@ -26,7 +26,7 @@ class StripeController extends Controller
 
 
 
-        \Stripe\Stripe::setApiKey('sk_test_51PcBrpRpnUt2lzX2rGFuoeifBd9p0ERppnqFbN1dJ9o82rZppuQXEX8k0HON449j7LjskTbah64rJPCcCBjP0ZoE00ZiYGc5o3');
+        \Stripe\Stripe::setApiKey('give your sk_test key');
     
     
         $token = $_POST['stripeToken'];
